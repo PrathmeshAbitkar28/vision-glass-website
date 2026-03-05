@@ -29,11 +29,36 @@ const services = [
 ];
 
 const trustedBy = [
-  { label: "Architects", icon: "🏛️" },
-  { label: "Builders", icon: "🏗️" },
-  { label: "Hospitals", icon: "🏥" },
-  { label: "Schools", icon: "🎓" },
-  { label: "Industrial Companies", icon: "🏭" },
+  {
+    label: "Architects",
+    desc: "Leading firms across Pune",
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80",
+    accent: "#0ea5e9",
+  },
+  {
+    label: "Builders",
+    desc: "Residential & commercial developers",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
+    accent: "#f59e0b",
+  },
+  {
+    label: "Hospitals",
+    desc: "Healthcare facilities & clinics",
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80",
+    accent: "#10b981",
+  },
+  {
+    label: "Schools",
+    desc: "Educational institutions",
+    image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80",
+    accent: "#8b5cf6",
+  },
+  {
+    label: "Industrial",
+    desc: "Factories & manufacturing units",
+    image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80",
+    accent: "#ec4899",
+  },
 ];
 
 const referCards = [
@@ -70,11 +95,9 @@ const Index = () => {
       sections.forEach((section) => {
         const headings = section.querySelectorAll(".gsap-heading");
         const cards = section.querySelectorAll(".gsap-card");
-        const pills = section.querySelectorAll(".gsap-pill");
         const stl = gsap.timeline({ scrollTrigger: { trigger: section, start: "top 82%" } });
         if (headings.length) stl.from(headings, { y: 32, opacity: 0, duration: 0.85, stagger: 0.12, ease: "power3.out" });
         if (cards.length) stl.from(cards, { y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.4");
-        if (pills.length) stl.from(pills, { y: 20, opacity: 0, scale: 0.95, duration: 0.6, stagger: 0.08, ease: "back.out(1.4)" }, "-=0.4");
       });
 
     }, mainRef);
@@ -179,22 +202,7 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {services.map((s) => (
-              <Link
-                key={s.title}
-                to="/services"
-                /*
-                  FIX: removed hover-lift class entirely.
-                  translateY on the card itself causes the cursor to leave
-                  the element boundary → mouseout fires → transform resets →
-                  cursor re-enters → mouseover fires → infinite flicker loop.
-
-                  Solution: wrap in an outer shell that catches the hover,
-                  and only lift the inner card. The outer shell stays put so
-                  the cursor never "escapes" the hover zone.
-                */
-                className="gsap-card service-card-outer group relative"
-              >
-                {/* Inner card that actually lifts */}
+              <Link key={s.title} to="/services" className="gsap-card service-card-outer group relative">
                 <div className="service-card-inner relative rounded-2xl overflow-hidden bg-card border border-border group-hover:border-transparent group-hover:shadow-2xl">
                   <div className="relative h-56 overflow-hidden">
                     <img src={s.image} alt={s.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out" loading="lazy" />
@@ -212,7 +220,6 @@ const Index = () => {
                       Learn More <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </span>
                   </div>
-                  {/* Bottom accent bar */}
                   <div className="absolute bottom-0 left-0 h-[3px] w-0 group-hover:w-full transition-all duration-500" style={{ backgroundColor: s.accent }} />
                 </div>
               </Link>
@@ -262,21 +269,71 @@ const Index = () => {
       {/* ════════════════════════════════════════
           TRUSTED BY
       ════════════════════════════════════════ */}
-      <section className="gsap-section py-20 bg-muted/20">
+      <section className="gsap-section py-24 md:py-28 bg-background overflow-hidden">
         <div className="container mx-auto px-4">
-          <p className="gsap-heading text-center text-xs font-semibold uppercase tracking-[0.25em] text-muted-foreground mb-10">
-            Trusted by industry leaders
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {trustedBy.map((t) => (
-              <div
-                key={t.label}
-                className="gsap-pill hover-lift-sm flex items-center gap-2 px-7 py-3 rounded-full bg-background border border-border text-sm font-medium text-foreground cursor-default hover:bg-primary hover:text-primary-foreground hover:border-primary"
-              >
-                <span>{t.icon}</span>{t.label}
+
+          <div className="text-center mb-14">
+            <div className="gsap-heading flex items-center justify-center gap-3 mb-4">
+              <div className="w-10 h-[2px] rounded-full bg-primary" />
+              <p className="text-primary text-xs font-semibold uppercase tracking-[0.22em]">Who We Serve</p>
+              <div className="w-10 h-[2px] rounded-full bg-primary" />
+            </div>
+            <h2 className="gsap-heading text-4xl md:text-5xl font-extrabold tracking-[-0.02em] text-foreground mb-3">
+              Trusted by Industry Leaders
+            </h2>
+            <p className="gsap-heading text-muted-foreground text-lg max-w-md mx-auto font-light">
+              From architects to industrialists — they all rely on Vision Glass.
+            </p>
+          </div>
+
+          {/* Cards — uniform fixed height, 5 across */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+            {trustedBy.map((item) => (
+              <div key={item.label} className="gsap-card trusted-card-outer group">
+                {/* Fixed total height = image 160px + body 72px = 232px */}
+                <div className="trusted-card-inner rounded-2xl overflow-hidden border border-border" style={{ height: "232px" }}>
+
+                  {/* Image — fixed height */}
+                  <div className="relative overflow-hidden" style={{ height: "160px" }}>
+                    <img
+                      src={item.image}
+                      alt={item.label}
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    {/* gradient for label legibility */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+
+                    {/* Label pinned to bottom of image */}
+                    <p className="absolute bottom-3 left-0 right-0 text-center text-white font-bold text-sm tracking-wide drop-shadow-md px-2">
+                      {item.label}
+                    </p>
+
+                    {/* Accent top bar */}
+                    <div
+                      className="absolute top-0 left-0 right-0 h-[3px]"
+                      style={{ backgroundColor: item.accent }}
+                    />
+                  </div>
+
+                  {/* Body — fixed height, vertically centered */}
+                  <div
+                    className="flex flex-col justify-center items-center px-3 text-center"
+                    style={{ height: "72px", background: "var(--card)" }}
+                  >
+                    <p className="text-xs text-muted-foreground leading-snug">{item.desc}</p>
+                    {/* Accent underline grows on hover */}
+                    <div
+                      className="mt-2 h-[2px] rounded-full w-0 group-hover:w-3/4 transition-all duration-500"
+                      style={{ backgroundColor: item.accent }}
+                    />
+                  </div>
+
+                </div>
               </div>
             ))}
           </div>
+
         </div>
       </section>
 
@@ -298,13 +355,8 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
             {referCards.map((card, i) => (
-              <div
-                key={i}
-                className="gsap-card refer-card-outer group relative"
-              >
-                <div
-                  className="refer-card-inner relative rounded-3xl border border-border bg-card p-8 text-center overflow-hidden group-hover:shadow-2xl group-hover:border-transparent"
-                >
+              <div key={i} className="gsap-card refer-card-outer group relative">
+                <div className="refer-card-inner relative rounded-3xl border border-border bg-card p-8 text-center overflow-hidden group-hover:shadow-2xl group-hover:border-transparent">
                   <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" style={{ background: `radial-gradient(circle at 50% 0%,${card.accent}18 0%,transparent 70%)` }} />
                   <div className="relative w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-transform duration-300 group-hover:scale-110" style={{ background: `${card.accent}18` }}>
                     <card.icon className="w-7 h-7" style={{ color: card.accent }} />
@@ -333,19 +385,11 @@ const Index = () => {
           to   { transform: scale(1.11); }
         }
 
-        /*
-          FLICKER FIX:
-          The outer shell (.service-card-outer / .refer-card-outer) is the
-          hover target — it does NOT move. Only the inner card lifts.
-          This means the cursor always stays inside the hover zone, so
-          mouseout never fires during the lift, eliminating the flicker.
-        */
+        /* ── Service / Refer card flicker fix ── */
         .service-card-outer,
         .refer-card-outer {
-          /* reserve the space the card will move into so layout doesn't shift */
           padding-bottom: 6px;
         }
-
         .service-card-inner,
         .refer-card-inner {
           transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
@@ -353,20 +397,25 @@ const Index = () => {
                       border-color 0.25s ease;
           will-change: transform;
         }
-
         .service-card-outer:hover .service-card-inner,
         .refer-card-outer:hover   .refer-card-inner {
           transform: translateY(-6px);
         }
 
-        .hover-lift-sm {
-          transition: transform 0.25s cubic-bezier(0.16,1,0.3,1),
-                      background 0.25s ease,
-                      color 0.25s ease,
-                      border-color 0.25s ease;
+        /* ── Trusted by cards ── */
+        .trusted-card-outer {
+          padding-bottom: 6px;
         }
-        .hover-lift-sm:hover {
-          transform: translateY(-2px);
+        .trusted-card-inner {
+          transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
+                      box-shadow 0.35s ease,
+                      border-color 0.25s ease;
+          will-change: transform;
+        }
+        .trusted-card-outer:hover .trusted-card-inner {
+          transform: translateY(-6px);
+          box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+          border-color: transparent;
         }
       `}</style>
     </div>
