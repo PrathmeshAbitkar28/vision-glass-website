@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin, MessageCircle, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useFadeIn } from "@/hooks/useFadeIn";
 
@@ -24,11 +24,15 @@ const Contact = () => {
   const { toast } = useToast();
   const containerRef = useFadeIn();
   const [form, setForm] = useState({ name: "", phone: "", email: "", service: "", details: "" });
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({ title: "Message Sent!", description: "We'll get back to you shortly." });
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 800));
+    toast({ title: "Message Sent!", description: "We'll get back to you within 24 hours." });
     setForm({ name: "", phone: "", email: "", service: "", details: "" });
+    setLoading(false);
   };
 
   const qrUrl =
@@ -45,107 +49,184 @@ const Contact = () => {
 
       <section className="section-padding bg-background">
         <div className="container mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 fade-in-section">
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="glass-card-strong rounded-2xl p-8">
-              <h2 className="text-2xl font-bold text-foreground mb-6">Send us a message</h2>
-              <div className="space-y-4">
-                <Input
-                  placeholder="Full Name"
-                  value={form.name}
-                  onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  required
-                />
-                <Input
-                  placeholder="Phone"
-                  type="tel"
-                  value={form.phone}
-                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  required
-                />
-                <Input
-                  placeholder="Email"
-                  type="email"
-                  value={form.email}
-                  onChange={(e) => setForm({ ...form, email: e.target.value })}
-                />
-                <Select
-                  value={form.service}
-                  onValueChange={(v) => setForm({ ...form, service: v })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Service Required" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {serviceOptions.map((s) => (
-                      <SelectItem key={s} value={s}>{s}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <Textarea
-                  placeholder="Project Details"
-                  value={form.details}
-                  onChange={(e) => setForm({ ...form, details: e.target.value })}
-                  rows={5}
-                />
-                <Button type="submit" className="w-full rounded-full" size="lg">
-                  Send Message
-                </Button>
-              </div>
-            </form>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 fade-in-section">
 
-            {/* Contact Details */}
-            <div className="space-y-6">
-              <div className="glass-card-strong rounded-2xl p-8">
-                <h3 className="text-xl font-bold text-foreground mb-6">Contact Details</h3>
-                <div className="space-y-4">
-                  <a href="tel:+919921917083" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <Phone className="w-5 h-5 text-primary" />
+            {/* ── FORM (3 cols) ── */}
+            <div className="lg:col-span-3">
+              <div className="rounded-3xl border border-border bg-card p-8 md:p-10">
+                <div className="mb-8">
+                  <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-2">Reach Out</p>
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">Send Us a Message</h2>
+                  <p className="text-muted-foreground text-sm mt-2">We'll get back to you within 24 hours.</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+                        Full Name *
+                      </label>
+                      <Input
+                        placeholder="Your name"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        required
+                        className="rounded-xl"
+                      />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Mobile</p>
-                      <p className="font-medium">+91 99219 17083</p>
+                      <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+                        Phone *
+                      </label>
+                      <Input
+                        placeholder="+91 XXXXX XXXXX"
+                        type="tel"
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                        required
+                        className="rounded-xl"
+                      />
                     </div>
-                  </a>
-                  <a href="tel:+917840917083" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <Phone className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+                      Email Address
+                    </label>
+                    <Input
+                      placeholder="your@email.com"
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+                      Service Required
+                    </label>
+                    <Select value={form.service} onValueChange={(v) => setForm({ ...form, service: v })}>
+                      <SelectTrigger className="rounded-xl">
+                        <SelectValue placeholder="Select a service..." />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {serviceOptions.map((s) => (
+                          <SelectItem key={s} value={s}>{s}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1.5 block">
+                      Project Details
+                    </label>
+                    <Textarea
+                      placeholder="Describe your project, requirements, dimensions, etc."
+                      value={form.details}
+                      onChange={(e) => setForm({ ...form, details: e.target.value })}
+                      rows={5}
+                      className="rounded-xl resize-none"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full rounded-xl h-12 font-semibold text-base"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <span className="flex items-center gap-2">
+                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Sending...
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-2">
+                        <Send className="w-4 h-4" /> Send Message
+                      </span>
+                    )}
+                  </Button>
+                </form>
+              </div>
+            </div>
+
+            {/* ── CONTACT INFO (2 cols) ── */}
+            <div className="lg:col-span-2 flex flex-col gap-5">
+              <div className="rounded-3xl border border-border bg-card p-8">
+                <p className="text-primary text-sm font-semibold uppercase tracking-widest mb-1">Contact</p>
+                <h3 className="text-xl font-bold text-foreground mb-6">Our Details</h3>
+                <div className="flex flex-col gap-5">
+                  <a
+                    href="tel:+919921917083"
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                      <Phone className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Office</p>
-                      <p className="font-medium">+91 78409 17083</p>
+                      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Mobile</p>
+                      <p className="font-semibold text-foreground">+91 99219 17083</p>
                     </div>
                   </a>
-                  <a href="mailto:visionglasscreation1@gmail.com" className="flex items-center gap-3 text-foreground hover:text-primary transition-colors">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                      <Mail className="w-5 h-5 text-primary" />
+                  <a
+                    href="tel:+917840917083"
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                      <Phone className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Email</p>
-                      <p className="font-medium">visionglasscreation1@gmail.com</p>
+                      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Office</p>
+                      <p className="font-semibold text-foreground">+91 78409 17083</p>
                     </div>
                   </a>
-                  <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-1">
+                  <a
+                    href="mailto:visionglasscreation1@gmail.com"
+                    className="flex items-center gap-4 group"
+                  >
+                    <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                      <Mail className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Email</p>
+                      <p className="font-semibold text-foreground text-sm">visionglasscreation1@gmail.com</p>
+                    </div>
+                  </a>
+                  <div className="flex items-start gap-4">
+                    <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
                       <MapPin className="w-5 h-5 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground">Address</p>
-                      <p className="font-medium text-foreground">
-                        Plot No. 595, Ganganagar Railway Line, Sector No. 28, Ganga Nagar, Nigdi,
-                        Pimpri-Chinchwad, Maharashtra 411044
+                      <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider mb-1">Address</p>
+                      <p className="text-sm text-foreground leading-relaxed">
+                        Plot No. 595, Ganganagar Railway Line, Sector No. 28, Ganga Nagar, Nigdi, Pimpri-Chinchwad 411044
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
 
+              {/* WhatsApp CTA */}
+              <a
+                href="https://wa.me/919921917083"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-3xl p-6 flex items-center gap-4 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                style={{ backgroundColor: "#25D366" }}
+              >
+                <div className="w-12 h-12 rounded-2xl bg-white/20 flex items-center justify-center shrink-0">
+                  <MessageCircle className="w-6 h-6 text-white" />
+                </div>
+                <div className="text-white">
+                  <p className="font-bold text-base">Chat on WhatsApp</p>
+                  <p className="text-white/80 text-sm">Quickest way to reach us</p>
+                </div>
+              </a>
+
               {/* QR Card */}
-              <div className="glass-card-strong rounded-2xl p-6 text-center">
-                <h4 className="font-semibold text-foreground mb-1">Scan to Visit Us</h4>
-                <p className="text-sm text-muted-foreground mb-4">Point camera to open location</p>
-                <img src={qrUrl} alt="QR code for location" className="mx-auto rounded w-[150px] h-[150px]" />
+              <div className="rounded-3xl border border-border bg-card p-6 text-center">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-4">
+                  Scan to Open Location
+                </p>
+                <img src={qrUrl} alt="QR code for location" className="mx-auto rounded-xl w-[130px] h-[130px]" />
+                <p className="text-xs text-muted-foreground mt-3">Points camera → Opens in Google Maps</p>
               </div>
             </div>
           </div>
@@ -153,18 +234,20 @@ const Contact = () => {
       </section>
 
       {/* Google Maps */}
-      <section className="px-4 pb-8 fade-in-section">
+      <section className="px-4 pb-12 fade-in-section">
         <div className="container mx-auto">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.2!2d73.77!3d18.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDM5JzAwLjAiTiA3M8KwNDYnMTIuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
-            width="100%"
-            height="400"
-            style={{ border: 0, borderRadius: "1rem" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Vision Glass Creation Location"
-          />
+          <div className="rounded-3xl overflow-hidden border border-border shadow-lg">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3781.2!2d73.77!3d18.65!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTjCsDM5JzAwLjAiTiA3M8KwNDYnMTIuMCJF!5e0!3m2!1sen!2sin!4v1234567890"
+              width="100%"
+              height="380"
+              style={{ border: 0, display: "block" }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Vision Glass Creation Location"
+            />
+          </div>
         </div>
       </section>
     </div>
