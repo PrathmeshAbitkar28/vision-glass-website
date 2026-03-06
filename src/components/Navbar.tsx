@@ -69,8 +69,8 @@ const Navbar = () => {
       >
         <div className="container mx-auto flex items-center justify-between h-full px-4">
 
-          {/* ── Logo ── */}
-          <Link to="/" className="flex items-center gap-3 group">
+          {/* ── Logo — text visible on all screen sizes ── */}
+          <Link to="/" className="flex items-center gap-2.5 group">
             <img
               src={logo}
               alt="Vision Glass Creation"
@@ -82,9 +82,9 @@ const Navbar = () => {
                 filter: isTransparent ? "brightness(0) invert(1)" : "none",
               }}
             />
-            <div className="hidden sm:block">
+            <div>
               <span
-                className="font-bold text-base leading-none block"
+                className="font-bold text-sm leading-none block"
                 style={{
                   color: isTransparent ? "rgba(255,255,255,1)" : "var(--foreground)",
                   transition: "color 0.5s ease",
@@ -93,7 +93,7 @@ const Navbar = () => {
                 Vision Glass
               </span>
               <span
-                className="text-xs font-medium block"
+                className="text-[10px] font-medium block mt-0.5"
                 style={{
                   color: isTransparent ? "rgba(255,255,255,0.55)" : "var(--muted-foreground)",
                   transition: "color 0.5s ease",
@@ -136,7 +136,7 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* ── Right: phone → Get Quote → Location → hamburger ── */}
+          {/* ── Right ── */}
           <div className="flex items-center gap-3">
 
             <a
@@ -191,6 +191,7 @@ const Navbar = () => {
               />
             </a>
 
+            {/* Mobile hamburger */}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild className="md:hidden">
                 <button
