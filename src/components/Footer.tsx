@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import logo from "@/images/logo_img/logo.png";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const LOGO = "/src/images/logo_img/logo.png";
 
 const marqueeWords = [
   "Glass Partitions", "Structural Facade", "Aluminium Windows",
@@ -39,35 +38,28 @@ const Footer = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-
       gsap.from(".ft-col", {
         scrollTrigger: { trigger: footerRef.current, start: "top 90%" },
         y: 48, opacity: 0, duration: 0.85, stagger: 0.12, ease: "power3.out",
       });
-
       gsap.from(".ft-logo", {
         scrollTrigger: { trigger: footerRef.current, start: "top 90%" },
         x: -30, opacity: 0, duration: 1, ease: "power3.out",
       });
-
       gsap.from(".ft-scanner", {
         scrollTrigger: { trigger: ".ft-scanner", start: "top 92%" },
         scale: 0.85, opacity: 0, duration: 0.9, ease: "back.out(1.4)",
       });
-
       gsap.from(".ft-divider", {
         scrollTrigger: { trigger: ".ft-divider", start: "top 98%" },
         scaleX: 0, transformOrigin: "left center",
         duration: 1.4, ease: "power3.inOut",
       });
-
       gsap.from(".ft-tagline span", {
         scrollTrigger: { trigger: ".ft-bottom", start: "top 99%" },
         opacity: 0, y: 10, duration: 0.4, stagger: 0.02, ease: "power2.out", delay: 0.3,
       });
-
     }, footerRef);
-
     return () => ctx.revert();
   }, []);
 
@@ -112,16 +104,10 @@ const Footer = () => {
             {/* Logo */}
             <div className="ft-logo flex items-center gap-3 mb-6">
               <img
-                src={LOGO}
+                src={logo}
                 alt="Vision Glass Creation"
                 className="h-10 w-auto object-contain"
-                style={{
-                  filter: "brightness(0) invert(1)",  // white version on dark bg
-                }}
-                onError={(e) => {
-                  // fallback: hide broken img gracefully
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
+                style={{ filter: "brightness(0) invert(1)" }}
               />
               <div>
                 <p className="font-extrabold text-white tracking-[-0.01em] leading-tight">Vision Glass</p>
@@ -138,7 +124,7 @@ const Footer = () => {
               Proprietor: Pratap Bhagwanrao Kathare
             </p>
 
-            {/* Scanner image */}
+            {/* Scanner */}
             <div className="ft-scanner">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "rgba(56,189,248,0.55)" }}>
                 Scan to Visit Us
@@ -217,7 +203,6 @@ const Footer = () => {
               Contact
             </h4>
             <div className="flex flex-col gap-4">
-
               {[
                 { href: "tel:+919921917083", label: "+91 99219 17083", icon: <Phone className="w-3.5 h-3.5 text-sky-400" /> },
                 { href: "tel:+917840917083", label: "+91 78409 17083", icon: <Phone className="w-3.5 h-3.5 text-sky-400" /> },
@@ -231,10 +216,8 @@ const Footer = () => {
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#fff"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgba(255,255,255,0.5)"; }}
                 >
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                    style={{ background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.18)" }}
-                  >
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.18)" }}>
                     {item.icon}
                   </div>
                   {item.label}
@@ -242,10 +225,8 @@ const Footer = () => {
               ))}
 
               <div className="flex items-start gap-3 text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
-                  style={{ background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.18)" }}
-                >
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                  style={{ background: "rgba(14,165,233,0.1)", border: "1px solid rgba(14,165,233,0.18)" }}>
                   <MapPin className="w-3.5 h-3.5 text-sky-400" />
                 </div>
                 <span className="leading-relaxed font-light">
@@ -255,17 +236,12 @@ const Footer = () => {
                 </span>
               </div>
 
-              {/* WhatsApp */}
               <a
                 href="https://wa.me/919921917083"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-1 inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
-                style={{
-                  background: "rgba(37,211,102,0.12)",
-                  border: "1px solid rgba(37,211,102,0.22)",
-                  color: "#4ade80",
-                }}
+                style={{ background: "rgba(37,211,102,0.12)", border: "1px solid rgba(37,211,102,0.22)", color: "#4ade80" }}
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(37,211,102,0.22)"; el.style.borderColor = "rgba(37,211,102,0.4)"; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(37,211,102,0.12)"; el.style.borderColor = "rgba(37,211,102,0.22)"; }}
               >

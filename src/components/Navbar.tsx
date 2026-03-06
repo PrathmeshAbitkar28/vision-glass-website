@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, Phone, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import logo from "@/images/logo_img/logo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -11,8 +12,6 @@ const navLinks = [
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ];
-
-const LOGO = "/src/images/logo_img/logo.png";
 
 const Navbar = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -73,7 +72,7 @@ const Navbar = () => {
           {/* ── Logo ── */}
           <Link to="/" className="flex items-center gap-3 group">
             <img
-              src={LOGO}
+              src={logo}
               alt="Vision Glass Creation"
               className="object-contain flex-shrink-0"
               style={{
@@ -117,8 +116,6 @@ const Navbar = () => {
                   style={{ color: getLinkColor(isActive) }}
                 >
                   {link.label}
-
-                  {/* ── Active indicator bar ── */}
                   <span
                     style={{
                       position: "absolute",
@@ -127,7 +124,7 @@ const Navbar = () => {
                       right: "8px",
                       height: "2.5px",
                       borderRadius: "999px",
-                      background: "#0ea5e9",          // always sky-500 blue, visible on both bg states
+                      background: "#0ea5e9",
                       opacity: isActive ? 1 : 0,
                       transform: isActive ? "scaleX(1)" : "scaleX(0.4)",
                       transformOrigin: "center",
@@ -142,7 +139,6 @@ const Navbar = () => {
           {/* ── Right: phone → Get Quote → Location → hamburger ── */}
           <div className="flex items-center gap-3">
 
-            {/* Phone */}
             <a
               href="tel:+919921917083"
               className="hidden lg:flex items-center gap-2 text-sm font-medium"
@@ -155,17 +151,12 @@ const Navbar = () => {
               +91 99219 17083
             </a>
 
-            {/* Get Quote */}
             <Link to="/contact" className="hidden md:block">
-              <Button
-                size="sm"
-                className="rounded-full px-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300"
-              >
+              <Button size="sm" className="rounded-full px-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300">
                 Get Quote
               </Button>
             </Link>
 
-            {/* Location */}
             <a
               href="https://maps.google.com/?q=Plot+595+Ganganagar+Railway+Line+Sector+28+Nigdi+Pimpri-Chinchwad+Maharashtra+411044"
               target="_blank"
@@ -200,7 +191,6 @@ const Navbar = () => {
               />
             </a>
 
-            {/* Mobile hamburger */}
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild className="md:hidden">
                 <button
@@ -215,11 +205,7 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-72">
                 <SheetTitle className="flex items-center gap-2 mb-8">
-                  <img
-                    src={LOGO}
-                    alt="Vision Glass Creation"
-                    className="h-8 w-auto object-contain"
-                  />
+                  <img src={logo} alt="Vision Glass Creation" className="h-8 w-auto object-contain" />
                   <span className="font-bold">Vision Glass Creation</span>
                 </SheetTitle>
                 <div className="flex flex-col gap-1">
@@ -228,10 +214,11 @@ const Navbar = () => {
                       key={link.to}
                       to={link.to}
                       onClick={() => setOpen(false)}
-                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${location.pathname === link.to
+                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                        location.pathname === link.to
                           ? "text-primary bg-primary/10"
                           : "text-foreground hover:bg-muted"
-                        }`}
+                      }`}
                     >
                       {link.label}
                     </Link>
