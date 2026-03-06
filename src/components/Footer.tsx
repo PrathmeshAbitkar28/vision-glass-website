@@ -5,6 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import logo from "@/images/logo_img/logo.png";
 
+
 gsap.registerPlugin(ScrollTrigger);
 
 const marqueeWords = [
@@ -50,25 +51,13 @@ const Footer = () => {
         scrollTrigger: { trigger: ".ft-scanner", start: "top 92%" },
         scale: 0.85, opacity: 0, duration: 0.9, ease: "back.out(1.4)",
       });
-      gsap.from(".ft-divider", {
-        scrollTrigger: { trigger: ".ft-divider", start: "top 98%" },
-        scaleX: 0, transformOrigin: "left center",
-        duration: 1.4, ease: "power3.inOut",
-      });
-      gsap.from(".ft-tagline span", {
-        scrollTrigger: { trigger: ".ft-bottom", start: "top 99%" },
-        opacity: 0, y: 10, duration: 0.4, stagger: 0.02, ease: "power2.out", delay: 0.3,
-      });
+      // ft-divider and ft-tagline are shown statically — ScrollTrigger
+      // cannot reliably detect bottom-of-page elements after production build
     }, footerRef);
     return () => ctx.revert();
   }, []);
 
   const tagline = "Pune's Trusted Glass & Window Solutions Since 2009";
-  const taglineChars = tagline.split("").map((ch, i) => (
-    <span key={i} style={{ display: "inline-block", whiteSpace: ch === " " ? "pre" : undefined }}>
-      {ch}
-    </span>
-  ));
 
   return (
     <footer ref={footerRef} style={{ background: "rgb(2,6,23)", color: "rgba(255,255,255,0.85)" }}>
@@ -124,7 +113,7 @@ const Footer = () => {
               Proprietor: Pratap Bhagwanrao Kathare
             </p>
 
-            {/* Scanner */}
+            {/* Scanner — now imported properly via Vite */}
             <div className="ft-scanner">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "rgba(56,189,248,0.55)" }}>
                 Scan to Visit Us
@@ -138,7 +127,7 @@ const Footer = () => {
                 }}
               >
                 <img
-                  src="/src/scanner_img/scanner.jpg"
+                  src="/scanner_img/scanner.jpg"
                   alt="Scan to visit Vision Glass Creation on Google Maps"
                   className="w-[128px] h-[128px] rounded-xl block"
                   style={{ objectFit: "cover" }}
@@ -232,7 +221,7 @@ const Footer = () => {
                 <span className="leading-relaxed font-light">
                   Plot No. 595, Ganganagar Railway Line,<br />
                   Sector 28, Nigdi, Pimpri-Chinchwad,<br />
-                  Maharashtra 411044
+                  Maharashtra 411444
                 </span>
               </div>
 
@@ -268,7 +257,7 @@ const Footer = () => {
       {/* ══ BOTTOM BAR ══ */}
       <div className="ft-bottom container mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-2">
         <p className="ft-tagline text-xs font-light" style={{ color: "rgba(255,255,255,0.28)" }}>
-          {taglineChars}
+          {tagline}
         </p>
         <p className="text-xs font-light" style={{ color: "rgba(255,255,255,0.2)" }}>
           © {new Date().getFullYear()} Vision Glass Creation. All rights reserved.

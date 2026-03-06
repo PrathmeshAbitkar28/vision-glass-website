@@ -34,11 +34,11 @@ const Navbar = () => {
   const progress = Math.min(scrollY / 80, 1);
   const isHome = location.pathname === "/";
 
-  const bgOpacity = isHome ? progress * 0.97 : 0.97;
-  const blurAmount = isHome ? progress * 20 : 20;
+  const bgOpacity    = isHome ? progress * 0.97 : 0.97;
+  const blurAmount   = isHome ? progress * 20   : 20;
   const shadowOpacity = isHome ? progress * 0.08 : 0.08;
   const borderOpacity = isHome ? progress * 0.08 : 0.08;
-  const navHeight = 80 - progress * 12;
+  const navHeight    = 80 - progress * 12;
 
   const isTransparent = isHome && progress < 0.5;
   const hoverBg = isTransparent ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.04)";
@@ -69,34 +69,41 @@ const Navbar = () => {
       >
         <div className="container mx-auto flex items-center justify-between h-full px-4">
 
-          {/* ── Logo — text visible on all screen sizes ── */}
-          <Link to="/" className="flex items-center gap-2.5 group">
+          {/* ── Logo ── */}
+          <Link to="/" className="flex items-center gap-2.5 group shrink-0">
             <img
               src={logo}
               alt="Vision Glass Creation"
               className="object-contain flex-shrink-0"
               style={{
-                height: `${38 - progress * 4}px`,
+                height: `${36 - progress * 4}px`,
                 width: "auto",
                 transition: "height 0.2s ease",
                 filter: isTransparent ? "brightness(0) invert(1)" : "none",
               }}
             />
             <div>
+              {/* "Vision Glass" — bold, normal case */}
               <span
-                className="font-bold text-sm leading-none block"
+                className="font-extrabold text-sm leading-tight block"
                 style={{
                   color: isTransparent ? "rgba(255,255,255,1)" : "var(--foreground)",
                   transition: "color 0.5s ease",
+                  letterSpacing: "-0.01em",
                 }}
               >
                 Vision Glass
               </span>
+              {/* "CREATION" — uppercase, spaced, muted; matches footer style */}
               <span
-                className="text-[10px] font-medium block mt-0.5"
+                className="block font-semibold"
                 style={{
-                  color: isTransparent ? "rgba(255,255,255,0.55)" : "var(--muted-foreground)",
+                  fontSize: "9px",
+                  letterSpacing: "0.25em",
+                  textTransform: "uppercase",
+                  color: isTransparent ? "rgba(255,255,255,0.55)" : "rgba(0,0,0,0.75)",
                   transition: "color 0.5s ease",
+                  marginTop: "1px",
                 }}
               >
                 Creation
@@ -136,9 +143,10 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* ── Right ── */}
-          <div className="flex items-center gap-3">
+          {/* ── Right: phone → Get Quote → Location → hamburger ── */}
+          <div className="flex items-center gap-2 md:gap-3">
 
+            {/* Phone — large screens only */}
             <a
               href="tel:+919921917083"
               className="hidden lg:flex items-center gap-2 text-sm font-medium"
@@ -151,12 +159,14 @@ const Navbar = () => {
               +91 99219 17083
             </a>
 
+            {/* Get Quote */}
             <Link to="/contact" className="hidden md:block">
               <Button size="sm" className="rounded-full px-6 shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/30 transition-all duration-300">
                 Get Quote
               </Button>
             </Link>
 
+            {/* Location */}
             <a
               href="https://maps.google.com/?q=Plot+595+Ganganagar+Railway+Line+Sector+28+Nigdi+Pimpri-Chinchwad+Maharashtra+411044"
               target="_blank"
@@ -173,13 +183,13 @@ const Navbar = () => {
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background = isTransparent ? "rgba(255,255,255,0.28)" : "rgba(14,165,233,0.22)";
-                el.style.borderColor = isTransparent ? "rgba(255,255,255,0.65)" : "rgba(14,165,233,0.60)";
+                el.style.background    = isTransparent ? "rgba(255,255,255,0.28)" : "rgba(14,165,233,0.22)";
+                el.style.borderColor   = isTransparent ? "rgba(255,255,255,0.65)" : "rgba(14,165,233,0.60)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background = isTransparent ? "rgba(255,255,255,0.15)" : "rgba(14,165,233,0.10)";
-                el.style.borderColor = isTransparent ? "rgba(255,255,255,0.35)" : "rgba(14,165,233,0.30)";
+                el.style.background    = isTransparent ? "rgba(255,255,255,0.15)" : "rgba(14,165,233,0.10)";
+                el.style.borderColor   = isTransparent ? "rgba(255,255,255,0.35)" : "rgba(14,165,233,0.30)";
               }}
             >
               <MapPin
@@ -205,9 +215,14 @@ const Navbar = () => {
                 </button>
               </SheetTrigger>
               <SheetContent side="right" className="w-72">
-                <SheetTitle className="flex items-center gap-2 mb-8">
-                  <img src={logo} alt="Vision Glass Creation" className="h-8 w-auto object-contain" />
-                  <span className="font-bold">Vision Glass Creation</span>
+                <SheetTitle className="flex items-center gap-2.5 mb-8">
+                  <img src={logo} alt="Vision Glass Creation" className="h-8 w-auto object-contain flex-shrink-0" />
+                  <div>
+                    <p className="font-extrabold text-sm leading-tight" style={{ letterSpacing: "-0.01em" }}>Vision Glass</p>
+                    <p className="font-semibold" style={{ fontSize: "9px", letterSpacing: "0.25em", textTransform: "uppercase", color: "rgba(0,0,0,0.75)", marginTop: "1px" }}>
+                      Creation
+                    </p>
+                  </div>
                 </SheetTitle>
                 <div className="flex flex-col gap-1">
                   {navLinks.map((link) => (
