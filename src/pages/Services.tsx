@@ -9,7 +9,7 @@ const services = [
     title: "Glass Partitions",
     subtitle: "Office & Commercial",
     desc: "Full and partial glass partition walls for offices, cabins and conference rooms. Custom sizes, frameless or framed.",
-    // Glass office partitions hallway — Unsplash
+    // Literal: Modern office with glass walls separating workspaces
     image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=700&q=85",
     tags: ["Frameless", "Framed", "Office Cabins"],
   },
@@ -17,56 +17,56 @@ const services = [
     title: "Aluminium & UPVC Windows",
     subtitle: "Windows & Partitions",
     desc: "Durable, weather-resistant window frames and partition systems for all building types — residential to industrial.",
-    // Building facade with windows and shadows, Dubai — aboodi vesakaran
-    image: "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=700&q=85",
+    // Literal: Looking closely at modern window frames
+    image: "https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?w=700&q=85",
     tags: ["Aluminium", "UPVC", "Casement", "Sliding"],
   },
   {
     title: "Structural Facade",
     subtitle: "Exterior Facade Systems",
     desc: "High-performance structural and semi-structural exterior glass facade systems for commercial buildings and IT parks.",
-    // Glass curtain wall on commercial tower
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85",
+    // Literal: Exterior glass facade/curtain wall of a modern skyscraper
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=85",
     tags: ["Structural", "Semi-Structural", "Curtain Wall"],
   },
   {
     title: "Glass Glazing",
     subtitle: "Composite Panel Work",
     desc: "Toughened glass glazing and composite ACP panel installations for building exteriors and interiors.",
-    // Glass panels building exterior reflection — verified Unsplash
-    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=700&q=85",
+    // Literal: Close-up of structural glass panels / spider glazing
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85",
     tags: ["Toughened Glass", "ACP Panels", "Safety Glass"],
   },
   {
     title: "Glass Interior Solutions",
     subtitle: "Complete Interior Fitouts",
     desc: "Custom glass shelving, cabinets, display units and full glass interior fitouts tailored to your design.",
-    // Glass interior fitout
-    image: "https://images.unsplash.com/photo-1497366412874-3415097a27c7?w=700&q=85",
+    // Literal: Modern interior featuring glass stair railings and doors
+    image: "https://images.unsplash.com/photo-1513694203232-719a280e022f?w=700&q=85",
     tags: ["Shelving", "Cabinets", "Display Units"],
   },
   {
     title: "Decorative & LED Mirrors",
     subtitle: "Mirror Work",
     desc: "Backlit LED mirrors, decorative mirrors, vastu mirrors and custom mirror installations for all spaces.",
-    // Modern bathroom with large wall mirror — verified Unsplash
-    image: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=700&q=85",
+    // Literal: A very clear decorative, backlit LED bathroom mirror
+    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=700&q=85",
     tags: ["LED Backlit", "Decorative", "Vastu"],
   },
   {
     title: "Acid, Stain & Bend Glass",
     subtitle: "Artistic Glass Treatments",
     desc: "Acid etching, stained glass, airbrush work and curved glass fabrication for unique architectural features.",
-    // Three colorful stained glass windows in dark room — Possessed Photography (ID: gqTceVX5ZOs)
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=700&q=85",
+    // Literal: Beautiful stained artistic glass window
+    image: "https://images.unsplash.com/photo-1516081498305-64feeb0b5ac0?w=700&q=85",
     tags: ["Acid Etching", "Stained Glass", "Bend Glass"],
   },
   {
     title: "PVC Fiber & Profile Doors",
     subtitle: "Door Systems",
     desc: "Moisture-resistant PVC fiber doors and premium profile door systems for all environments.",
-    // Clean modern interior door
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=700&q=85",
+    // Literal: A clean, modern profile door
+    image: "https://images.unsplash.com/photo-1534138138883-7c157f12c3b8?w=700&q=85",
     tags: ["PVC Fiber", "Profile Doors", "Moisture Resistant"],
   },
 ];

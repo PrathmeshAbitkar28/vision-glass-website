@@ -31,16 +31,16 @@ const services = [
 ];
 
 const trustedBy = [
-  { label: "Architects",  desc: "Leading firms across Pune",            image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80" },
-  { label: "Builders",    desc: "Residential & commercial developers",   image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" },
-  { label: "Hospitals",   desc: "Healthcare facilities & clinics",       image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80" },
-  { label: "Schools",     desc: "Educational institutions",              image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80" },
-  { label: "Industrial",  desc: "Factories & manufacturing units",       image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80" },
+  { label: "Architects", desc: "Leading firms across Pune", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80" },
+  { label: "Builders", desc: "Residential & commercial developers", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80" },
+  { label: "Hospitals", desc: "Healthcare facilities & clinics", image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80" },
+  { label: "Schools", desc: "Educational institutions", image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=80" },
+  { label: "Industrial", desc: "Factories & manufacturing units", image: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=600&q=80" },
 ];
 
 const referCards = [
   { question: "Looking for office cabin or glass partition work?", sub: "We design and install custom office partitions across Pune.", icon: PanelTop },
-  { question: "Need to replace broken cabin or window glass?",     sub: "Fast, reliable glass replacement with professional finishing.", icon: Frame },
+  { question: "Need to replace broken cabin or window glass?", sub: "Fast, reliable glass replacement with professional finishing.", icon: Frame },
   { question: "Searching for soundproof glass or window solutions?", sub: "Acoustic glass systems engineered for peace and privacy.", icon: Shield },
 ];
 
@@ -58,21 +58,21 @@ const Index = () => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.3 });
       tl.from(".hero-badge", { y: 20, opacity: 0, scale: 0.92, duration: 0.8 })
-        .from(".hero-line",  { y: 60, opacity: 0, filter: "blur(8px)", duration: 1.1, stagger: 0.18 }, "-=0.3")
-        .from(".hero-sub",   { y: 28, opacity: 0, duration: 0.9 }, "-=0.5")
+        .from(".hero-line", { y: 60, opacity: 0, filter: "blur(8px)", duration: 1.1, stagger: 0.18 }, "-=0.3")
+        .from(".hero-sub", { y: 28, opacity: 0, duration: 0.9 }, "-=0.5")
         .from(".hero-btns > *", { y: 20, opacity: 0, duration: 0.7, stagger: 0.12 }, "-=0.5")
-        .from(".hero-scroll",   { y: 10, opacity: 0, duration: 0.6 }, "-=0.3");
+        .from(".hero-scroll", { y: 10, opacity: 0, duration: 0.6 }, "-=0.3");
 
-      gsap.to(".float-a", { y: -22, rotation:  2,  duration: 4,   ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".float-b", { y: -15, rotation: -2,  duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".float-c", { y: -18, rotation:  1.5,duration: 4.8, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(".float-a", { y: -22, rotation: 2, duration: 4, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(".float-b", { y: -15, rotation: -2, duration: 5.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      gsap.to(".float-c", { y: -18, rotation: 1.5, duration: 4.8, ease: "sine.inOut", yoyo: true, repeat: -1 });
 
       gsap.utils.toArray<HTMLElement>(".gsap-section").forEach((section) => {
         const headings = section.querySelectorAll(".gsap-heading");
-        const cards    = section.querySelectorAll(".gsap-card");
+        const cards = section.querySelectorAll(".gsap-card");
         const stl = gsap.timeline({ scrollTrigger: { trigger: section, start: "top 82%" } });
         if (headings.length) stl.from(headings, { y: 32, opacity: 0, duration: 0.85, stagger: 0.12, ease: "power3.out" });
-        if (cards.length)    stl.from(cards,    { y: 50, opacity: 0, duration: 0.8,  stagger: 0.1,  ease: "power3.out" }, "-=0.4");
+        if (cards.length) stl.from(cards, { y: 50, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.4");
       });
     }, mainRef);
     return () => ctx.revert();
@@ -268,7 +268,7 @@ const Index = () => {
 
 
       {/* ════════════ REFER A CLIENT ════════════ */}
-      <section className="gsap-section py-24 md:py-32 bg-background">
+      <section className="gsap-section py-24 md:py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <div className="gsap-heading flex items-center justify-center gap-3 mb-4">

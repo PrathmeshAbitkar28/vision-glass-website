@@ -7,9 +7,9 @@ import logo from "@/images/logo_img/logo.png";
 
 const navLinks = [
   { label: "Home", to: "/" },
+  { label: "About", to: "/about" },
   { label: "Services", to: "/services" },
   { label: "Gallery", to: "/gallery" },
-  { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ];
 
@@ -34,11 +34,11 @@ const Navbar = () => {
   const progress = Math.min(scrollY / 80, 1);
   const isHome = location.pathname === "/";
 
-  const bgOpacity    = isHome ? progress * 0.97 : 0.97;
-  const blurAmount   = isHome ? progress * 20   : 20;
+  const bgOpacity = isHome ? progress * 0.97 : 0.97;
+  const blurAmount = isHome ? progress * 20 : 20;
   const shadowOpacity = isHome ? progress * 0.08 : 0.08;
   const borderOpacity = isHome ? progress * 0.08 : 0.08;
-  const navHeight    = 80 - progress * 12;
+  const navHeight = 80 - progress * 12;
 
   const isTransparent = isHome && progress < 0.5;
   const hoverBg = isTransparent ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.04)";
@@ -183,13 +183,13 @@ const Navbar = () => {
               }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background    = isTransparent ? "rgba(255,255,255,0.28)" : "rgba(14,165,233,0.22)";
-                el.style.borderColor   = isTransparent ? "rgba(255,255,255,0.65)" : "rgba(14,165,233,0.60)";
+                el.style.background = isTransparent ? "rgba(255,255,255,0.28)" : "rgba(14,165,233,0.22)";
+                el.style.borderColor = isTransparent ? "rgba(255,255,255,0.65)" : "rgba(14,165,233,0.60)";
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement;
-                el.style.background    = isTransparent ? "rgba(255,255,255,0.15)" : "rgba(14,165,233,0.10)";
-                el.style.borderColor   = isTransparent ? "rgba(255,255,255,0.35)" : "rgba(14,165,233,0.30)";
+                el.style.background = isTransparent ? "rgba(255,255,255,0.15)" : "rgba(14,165,233,0.10)";
+                el.style.borderColor = isTransparent ? "rgba(255,255,255,0.35)" : "rgba(14,165,233,0.30)";
               }}
             >
               <MapPin
@@ -230,11 +230,10 @@ const Navbar = () => {
                       key={link.to}
                       to={link.to}
                       onClick={() => setOpen(false)}
-                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                        location.pathname === link.to
+                      className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${location.pathname === link.to
                           ? "text-primary bg-primary/10"
                           : "text-foreground hover:bg-muted"
-                      }`}
+                        }`}
                     >
                       {link.label}
                     </Link>
