@@ -36,6 +36,8 @@ const services = [
 
 const Footer = () => {
   const footerRef = useRef<HTMLElement>(null);
+  const dividerRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -51,17 +53,37 @@ const Footer = () => {
         scrollTrigger: { trigger: ".ft-scanner", start: "top 92%" },
         scale: 0.85, opacity: 0, duration: 0.9, ease: "back.out(1.4)",
       });
-      gsap.from(".ft-divider", {
-        scrollTrigger: { trigger: ".ft-bottom", start: "top 95%", once: true },
-        scaleX: 0, transformOrigin: "left center",
-        duration: 1.4, ease: "power3.inOut",
-      });
-      gsap.from(".ft-bottom", {
-        scrollTrigger: { trigger: ".ft-bottom", start: "top 95%", once: true },
-        opacity: 0, y: 16, duration: 0.8, ease: "power3.out", delay: 0.3,
-      });
     }, footerRef);
     return () => ctx.revert();
+  }, []);
+
+  // ── IntersectionObserver for divider + bottom bar ──
+  // Reliable in production unlike GSAP ScrollTrigger at page bottom
+  useEffect(() => {
+    const els = [dividerRef.current, bottomRef.current].filter(Boolean) as HTMLElement[];
+
+    const show = () => els.forEach((el) => el.classList.add("ft-visible"));
+
+    // Fallback: always show after 1.5s no matter what
+    const fallback = setTimeout(show, 1500);
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("ft-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0, rootMargin: "0px" }
+    );
+    els.forEach((el) => observer.observe(el));
+
+    return () => {
+      clearTimeout(fallback);
+      observer.disconnect();
+    };
   }, []);
 
   const tagline = "Pune's Trusted Glass & Window Solutions Since 2009";
@@ -254,6 +276,7 @@ const Footer = () => {
 
       {/* ══ DIVIDER ══ */}
       <div
+        ref={dividerRef}
         className="ft-divider mx-4 md:mx-8"
         style={{
           height: "1px",
@@ -262,8 +285,11 @@ const Footer = () => {
       />
 
       {/* ══ BOTTOM BAR ══ */}
-      <div className="ft-bottom container mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-2">
-        <p className="ft-tagline text-xs font-light" style={{ color: "rgba(255,255,255,0.28)" }}>
+      <div
+        ref={bottomRef}
+        className="ft-bottom container mx-auto px-4 py-5 flex flex-col md:flex-row items-center justify-between gap-2"
+      >
+        <p className="text-xs font-light" style={{ color: "rgba(255,255,255,0.28)" }}>
           {tagline}
         </p>
         <p className="text-xs font-light" style={{ color: "rgba(255,255,255,0.2)" }}>
@@ -275,6 +301,27 @@ const Footer = () => {
         @keyframes ftMarquee {
           from { transform: translateX(0); }
           to   { transform: translateX(-50%); }
+        }
+
+        /* Divider — scaleX reveal */
+        .ft-divider {
+          transform: scaleX(0);
+          transform-origin: left center;
+          transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .ft-divider.ft-visible {
+          transform: scaleX(1);
+        }
+
+        /* Bottom bar — fade + slide up */
+        .ft-bottom {
+          opacity: 0;
+          transform: translateY(12px);
+          transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+        }
+        .ft-bottom.ft-visible {
+          opacity: 1;
+          transform: translateY(0);
         }
       `}</style>
     </footer>
