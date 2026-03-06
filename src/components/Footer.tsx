@@ -51,8 +51,15 @@ const Footer = () => {
         scrollTrigger: { trigger: ".ft-scanner", start: "top 92%" },
         scale: 0.85, opacity: 0, duration: 0.9, ease: "back.out(1.4)",
       });
-      // ft-divider and ft-tagline are shown statically — ScrollTrigger
-      // cannot reliably detect bottom-of-page elements after production build
+      gsap.from(".ft-divider", {
+        scrollTrigger: { trigger: ".ft-bottom", start: "top 95%", once: true },
+        scaleX: 0, transformOrigin: "left center",
+        duration: 1.4, ease: "power3.inOut",
+      });
+      gsap.from(".ft-bottom", {
+        scrollTrigger: { trigger: ".ft-bottom", start: "top 95%", once: true },
+        opacity: 0, y: 16, duration: 0.8, ease: "power3.out", delay: 0.3,
+      });
     }, footerRef);
     return () => ctx.revert();
   }, []);
