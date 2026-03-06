@@ -28,9 +28,18 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (form.phone.length !== 10) {
+      toast({ title: "Invalid phone number", description: "Please enter exactly 10 digits." });
+      return;
+    }
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 800));
-    toast({ title: "Message Sent!", description: "We'll get back to you within 24 hours." });
+
+    const message = `*New Contact Inquiry*\n\n*Name:* ${form.name}\n*Phone:* ${form.phone}\n*Email:* ${form.email || "N/A"}\n*Service Required:* ${form.service || "Not specified"}\n*Project Details:* ${form.details || "None"}`;
+    const whatsappUrl = `https://wa.me/919921917083?text=${encodeURIComponent(message)}`;
+
+    window.open(whatsappUrl, "_blank");
+
+    toast({ title: "Redirecting...", description: "Opening WhatsApp to send your message." });
     setForm({ name: "", phone: "", email: "", service: "", details: "" });
     setLoading(false);
   };
@@ -79,10 +88,16 @@ const Contact = () => {
                         Phone *
                       </label>
                       <Input
-                        placeholder="+91 XXXXX XXXXX"
+                        placeholder="10-digit mobile number"
                         type="tel"
                         value={form.phone}
-                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, "").slice(0, 10);
+                          setForm({ ...form, phone: val });
+                        }}
+                        pattern="[0-9]{10}"
+                        title="Please enter exactly 10 digits"
+                        maxLength={10}
                         required
                         className="rounded-xl"
                       />
