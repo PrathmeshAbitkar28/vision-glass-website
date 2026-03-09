@@ -48,10 +48,6 @@ const Footer = () => {
         scrollTrigger: { trigger: footerRef.current, start: "top 90%" },
         x: -30, opacity: 0, duration: 1, ease: "power3.out",
       });
-      gsap.from(".ft-scanner", {
-        scrollTrigger: { trigger: ".ft-scanner", start: "top 92%" },
-        scale: 0.85, opacity: 0, duration: 0.9, ease: "back.out(1.4)",
-      });
     }, footerRef);
     return () => ctx.revert();
   }, []);
@@ -101,74 +97,68 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* ══ MAIN GRID ══ */}
-      <div className="container mx-auto px-4 pt-16 pb-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
+      {/* ══ MAIN GRID — 5 columns ══ */}
+      <div className="container mx-auto px-4 pt-14 pb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-12 gap-6 lg:gap-6">
 
-          {/* ── Brand + Scanner ── */}
-          <div className="ft-col lg:col-span-4">
-            <div className="ft-logo flex items-center gap-3 mb-6">
+          {/* ── Col 1: Brand (3 cols) ── */}
+          <div className="ft-col col-span-2 md:col-span-1 lg:col-span-3">
+            <div className="ft-logo flex items-center gap-2.5 mb-4">
               <img
                 src={logo}
                 alt="Vision Glass Creation"
-                className="h-10 w-auto object-contain"
+                className="h-9 w-auto object-contain"
                 style={{ filter: "brightness(0) invert(1)" }}
               />
               <div>
-                <p className="font-extrabold text-white tracking-[-0.01em] leading-tight">Vision Glass</p>
-                {/* CREATION — white shade, clearly visible on dark */}
-                <p className="text-[10px] font-semibold tracking-[0.25em] uppercase" style={{ color: "#ffffff" }}>
+                <p className="font-extrabold text-white tracking-[-0.01em] leading-tight text-sm">Vision Glass</p>
+                <p className="text-[9px] font-semibold tracking-[0.25em] uppercase" style={{ color: "#ffffff" }}>
                   Creation
                 </p>
               </div>
             </div>
-
-            {/* Description — bumped up from 0.5 → 0.75 */}
-            <p className="text-sm leading-relaxed mb-2 font-light" style={{ color: "rgb(209,213,219)" }}>
+            <p className="text-sm leading-relaxed mb-1.5 font-light" style={{ color: "rgb(209,213,219)" }}>
               Expert in Window &amp; Glass Solutions for commercial, residential and industrial spaces across Pune.
             </p>
-            {/* Proprietor — bumped up from 0.3 → 0.5 */}
-            <p className="text-xs mb-10" style={{ color: "rgb(209,213,219)" }}>
+            <p className="text-xs" style={{ color: "rgb(209,213,219)" }}>
               Proprietor: Pratap Bhagwanrao Kathare
             </p>
+          </div>
 
-            <div className="ft-scanner">
-              {/* "Scan to Visit Us" label — white instead of dim blue */}
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] mb-3" style={{ color: "#ffffff" }}>
-                Scan to Visit Us
-              </p>
-              <div
-                className="inline-flex flex-col items-center rounded-2xl p-4 gap-3"
-                style={{
-                  background: "rgba(255,255,255,0.04)",
-                  border: "1px solid rgba(255,255,255,0.12)",
-                  boxShadow: "0 0 40px rgba(255,255,255,0.04)",
+          {/* ── Col 2: Scanner (2 cols) ── */}
+          <div className="ft-col lg:col-span-2 flex flex-col items-start">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-2.5" style={{ color: "#ffffff" }}>
+              Scan to Visit
+            </p>
+            <div
+              className="inline-flex flex-col items-center rounded-xl p-3 gap-2"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.12)",
+              }}
+            >
+              <img
+                src="/scanner_img/scanner.jpg"
+                alt="Scan to visit Vision Glass Creation on Google Maps"
+                className="w-[100px] h-[100px] rounded-lg block"
+                style={{ objectFit: "cover" }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src =
+                    "https://api.qrserver.com/v1/create-qr-code/?size=100x100&color=e0f2fe&bgcolor=020617&data=https://maps.google.com/?q=Plot+595+Ganganagar+Nigdi+Pimpri-Chinchwad";
                 }}
-              >
-                <img
-                  src="/scanner_img/scanner.jpg"
-                  alt="Scan to visit Vision Glass Creation on Google Maps"
-                  className="w-[128px] h-[128px] rounded-xl block"
-                  style={{ objectFit: "cover" }}
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src =
-                      "https://api.qrserver.com/v1/create-qr-code/?size=128x128&color=e0f2fe&bgcolor=020617&data=https://maps.google.com/?q=Plot+595+Ganganagar+Nigdi+Pimpri-Chinchwad";
-                  }}
-                />
-                <p className="text-[10px] leading-tight text-center font-light" style={{ color: "#ffffff" }}>
-                  Opens Google Maps
-                </p>
-              </div>
+              />
+              <p className="text-[10px] leading-tight text-center font-light" style={{ color: "rgb(209,213,219)" }}>
+                Opens Google Maps
+              </p>
             </div>
           </div>
 
-          {/* ── Navigate ── */}
+          {/* ── Col 3: Navigate (2 cols) ── */}
           <div className="ft-col lg:col-span-2">
-            {/* Section heading — white instead of dim blue */}
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] mb-6" style={{ color: "#ffffff" }}>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: "#ffffff" }}>
               Navigate
             </h4>
-            <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col gap-2.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.label}
@@ -185,12 +175,12 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ── Services ── */}
-          <div className="ft-col lg:col-span-3">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] mb-6" style={{ color: "#ffffff" }}>
+          {/* ── Col 4: Services (2 cols) ── */}
+          <div className="ft-col lg:col-span-2">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: "#ffffff" }}>
               Our Services
             </h4>
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-2">
               {services.map((s) => (
                 <Link
                   key={s}
@@ -206,26 +196,26 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ── Contact ── */}
+          {/* ── Col 5: Contact (3 cols) ── */}
           <div className="ft-col lg:col-span-3">
-            <h4 className="text-[10px] font-semibold uppercase tracking-[0.22em] mb-6" style={{ color: "#ffffff" }}>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: "#ffffff" }}>
               Contact
             </h4>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               {[
-                { href: "tel:+919921917083",                    label: "+91 99219 17083",                  icon: <Phone className="w-3.5 h-3.5 text-white" /> },
-                { href: "tel:+917840917083",                    label: "+91 78409 17083",                  icon: <Phone className="w-3.5 h-3.5 text-white" /> },
-                { href: "mailto:visionglasscreation1@gmail.com", label: "visionglasscreation1@gmail.com", icon: <Mail  className="w-3.5 h-3.5 text-white" /> },
+                { href: "tel:+919921917083",                     label: "+91 99219 17083",                 icon: <Phone className="w-3.5 h-3.5 text-white" /> },
+                { href: "tel:+917840917083",                     label: "+91 78409 17083",                 icon: <Phone className="w-3.5 h-3.5 text-white" /> },
+                { href: "mailto:visionglasscreation1@gmail.com", label: "visionglasscreation1@gmail.com",  icon: <Mail  className="w-3.5 h-3.5 text-white" /> },
               ].map((item) => (
                 <a
                   key={item.href}
                   href={item.href}
-                  className="flex items-center gap-3 text-sm transition-colors duration-200 break-all"
+                  className="flex items-center gap-2.5 text-sm transition-colors duration-200 break-all"
                   style={{ color: "rgb(209,213,219)" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = "#38bdf8"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = "rgb(209,213,219)"; }}
                 >
-                  <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0"
                     style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}>
                     {item.icon}
                   </div>
@@ -234,8 +224,8 @@ const Footer = () => {
               ))}
 
               {/* Address */}
-              <div className="flex items-start gap-3 text-sm" style={{ color: "rgb(209,213,219)" }}>
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+              <div className="flex items-start gap-2.5 text-sm" style={{ color: "rgb(209,213,219)" }}>
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
                   style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)" }}>
                   <MapPin className="w-3.5 h-3.5 text-white" />
                 </div>
@@ -251,12 +241,12 @@ const Footer = () => {
                 href="https://wa.me/919921917083"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1 inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300"
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-300"
                 style={{ background: "rgba(37,211,102,0.15)", border: "1px solid rgba(37,211,102,0.35)", color: "#6ee7a0" }}
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(37,211,102,0.25)"; el.style.borderColor = "rgba(37,211,102,0.55)"; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLElement; el.style.background = "rgba(37,211,102,0.15)"; el.style.borderColor = "rgba(37,211,102,0.35)"; }}
               >
-                <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current shrink-0">
+                <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current shrink-0">
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
                 </svg>
                 Chat on WhatsApp
