@@ -128,8 +128,8 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* ── Col 2: Scanner (2 cols) ── */}
-          <div className="ft-col lg:col-span-2 flex flex-col items-start">
+          {/* ── Col 2: Scanner (2 cols) — hidden on mobile, shown in position on md+ ── */}
+          <div className="ft-col hidden md:flex lg:col-span-2 flex-col items-start">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-2.5" style={{ color: "#ffffff" }}>
               Scan to Visit
             </p>
@@ -200,7 +200,7 @@ const Footer = () => {
           </div>
 
           {/* ── Col 5: Contact (3 cols) ── */}
-          <div className="ft-col lg:col-span-3">
+          <div className="ft-col col-span-2 md:col-span-1 lg:col-span-3">
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.18em] mb-4" style={{ color: "#ffffff" }}>
               Contact
             </h4>
@@ -254,6 +254,34 @@ const Footer = () => {
                 </svg>
                 Chat on WhatsApp
               </a>
+            </div>
+          </div>
+
+          {/* ── Scanner — mobile only, shown after contact ── */}
+          <div className="ft-col col-span-2 flex flex-col items-start md:hidden">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] mb-2" style={{ color: "#ffffff" }}>
+              Scan to Visit
+            </p>
+            <div
+              className="inline-flex flex-col items-center rounded-lg p-2 gap-1.5"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.12)",
+              }}
+            >
+              <img
+                src="/scanner_img/scanner.jpg"
+                alt="Scan to visit Vision Glass Creation on Google Maps"
+                className="w-[72px] h-[72px] rounded-md block"
+                style={{ objectFit: "cover" }}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src =
+                    "https://api.qrserver.com/v1/create-qr-code/?size=72x72&color=e0f2fe&bgcolor=020617&data=https://maps.google.com/?q=Plot+595+Ganganagar+Nigdi+Pimpri-Chinchwad";
+                }}
+              />
+              <p className="text-[9px] leading-tight text-center font-light" style={{ color: "rgb(209,213,219)" }}>
+                Opens Google Maps
+              </p>
             </div>
           </div>
 
