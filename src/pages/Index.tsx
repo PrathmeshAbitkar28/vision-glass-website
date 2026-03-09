@@ -98,7 +98,7 @@ const Index = () => {
           <div className="float-c absolute bottom-[20%] left-[13%] w-24 h-32 rounded-2xl bg-white/5 backdrop-blur-md border border-white/15" />
         </div>
 
-        <div className="relative z-10 text-center text-white px-4 max-w-5xl mx-auto pt-28 md:pt-0">
+        <div className="relative z-10 text-center text-white px-4 max-w-5xl mx-auto pt-28 md:pt-0 pb-16 md:pb-0 ">
           <div className="hero-badge inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-5 py-2 text-sm font-medium tracking-wide mb-7">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             Pune's Trusted Glass Experts
@@ -132,10 +132,11 @@ const Index = () => {
           </div>
         </div>
 
-        <div className="hero-scroll absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-white/40">
-          <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
-        </div>
+        <div className="hero-scroll hidden md:flex absolute bottom-10 left-1/2 -translate-x-1/2 flex-col items-center gap-1 text-white/40">
+  <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
+  <ChevronDown className="w-5 h-5 animate-bounce" />
+</div>
+
       </section>
 
 
