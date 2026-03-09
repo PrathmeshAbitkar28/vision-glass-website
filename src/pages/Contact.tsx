@@ -199,9 +199,9 @@ const Contact = () => {
                     <div className="w-11 h-11 rounded-2xl bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
                       <Mail className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Email</p>
-                      <p className="font-semibold text-foreground text-sm">visionglasscreation1@gmail.com</p>
+                      <p className="font-semibold text-foreground text-sm break-all leading-snug">visionglasscreation1@gmail.com</p>
                     </div>
                   </a>
                   <div className="flex items-start gap-4">

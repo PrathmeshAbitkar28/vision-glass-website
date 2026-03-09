@@ -149,11 +149,11 @@ const Services = () => {
           </div>
 
           {/* Bottom CTA */}
-          <div className="mt-16 rounded-3xl bg-gradient-to-br from-primary to-primary/80 p-10 md:p-14 text-center text-white fade-in-section">
-            <h3 className="text-2xl md:text-3xl font-bold mb-3">Don't see what you're looking for?</h3>
-            <p className="text-white/70 mb-7 text-lg">We offer custom glass solutions. Get in touch and we'll find the perfect fit for your project.</p>
-            <Link to="/contact">
-              <Button variant="secondary" size="lg" className="rounded-full px-10 font-semibold">
+          <div className="mt-16 rounded-3xl bg-gradient-to-br from-primary to-primary/80 p-8 md:p-14 text-center text-white fade-in-section overflow-hidden">
+            <h3 className="text-xl md:text-3xl font-bold mb-3">Don't see what you're looking for?</h3>
+            <p className="text-white/70 mb-7 text-base md:text-lg">We offer custom glass solutions. Get in touch and we'll find the perfect fit for your project.</p>
+            <Link to="/contact" className="inline-block w-full sm:w-auto">
+              <Button variant="secondary" size="lg" className="rounded-full px-8 md:px-10 font-semibold w-full sm:w-auto">
                 Discuss Your Project
               </Button>
             </Link>
