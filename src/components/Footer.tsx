@@ -77,9 +77,9 @@ const Footer = () => {
     <footer ref={footerRef} style={{ background: "rgb(2,6,23)", color: "#ffffff" }}>
 
       {/* ══ MARQUEE STRIP ══ */}
-      <div className="overflow-hidden" style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)" }}>
+      <div className="overflow-hidden" style={{ background: "#0ea5e9" }}>
         <div
-          className="flex py-3"
+          className="flex py-2.5"
           style={{ width: "max-content", animation: "ftMarquee 30s linear infinite" }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.animationPlayState = "paused"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.animationPlayState = "running"; }}
@@ -87,11 +87,14 @@ const Footer = () => {
           {[...marqueeWords, ...marqueeWords].map((word, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-3 px-6 text-[11px] font-semibold uppercase tracking-[0.22em]"
-              style={{ color: "#ffffff" }}
+              className="inline-flex items-center gap-2.5 px-5 text-[11px] font-bold uppercase tracking-[0.18em]"
+              style={{ color: "rgb(7,18,36)" }}
             >
               {word}
-              <span className="w-1 h-1 rounded-full shrink-0" style={{ background: "rgba(255,255,255,0.25)" }} />
+              <span
+                className="w-1.5 h-1.5 rounded-full shrink-0"
+                style={{ background: "rgba(7,18,36,0.35)" }}
+              />
             </span>
           ))}
         </div>
