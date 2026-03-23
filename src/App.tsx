@@ -11,7 +11,12 @@ import FloatingButtons from "@/user/components/FloatingButtons";
 import GlobalFont from "@/user/components/GlobalFont";
 import ScrollToTop from "@/user/components/ScrollToTop";
 
-// ── User pages — all lazy (Index too, no reason to eager-load it) ──
+// ── ProtectedRoute: EAGER import (never lazy) ──
+// It renders <Navigate> synchronously — if lazy, the Suspense boundary
+// intercepts before Navigate fires and the redirect never happens.
+import ProtectedRoute from "@/admin/components/ProtectedRoute";
+
+// ── User pages — lazy ──
 const Index = lazy(() => import("@/user/pages/Index"));
 const Services = lazy(() => import("@/user/pages/Services"));
 const Gallery = lazy(() => import("@/user/pages/Gallery"));
@@ -29,20 +34,14 @@ const AdminGallery = lazy(() => import("@/admin/pages/GalleryManagement"));
 const AdminInquiries = lazy(() => import("@/admin/pages/InquiryManagement"));
 const HomeManagement = lazy(() => import("@/admin/pages/HomeManagement"));
 const AdminLogin = lazy(() => import("@/admin/pages/Login"));
-const ProtectedRoute = lazy(() => import("@/admin/components/ProtectedRoute"));
 
 import { seedInitialData } from "@/shared/lib/firestore-service";
 
-// ── React Query client ──
-// Key changes vs original:
-//   staleTime:            5 min → 30 min  (4x fewer Firestore reads per session)
-//   refetchOnMount:       true  → false   (no re-fetch when navigating back to a page)
-//   refetchOnWindowFocus: true  → false   (no re-fetch when user alt-tabs back)
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 30, // 30 minutes
-      gcTime: 1000 * 60 * 60, // keep in memory 1 hour
+      staleTime: 1000 * 60 * 30,
+      gcTime: 1000 * 60 * 60,
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       retry: 1,
@@ -50,8 +49,6 @@ const queryClient = new QueryClient({
   },
 });
 
-// ── Minimal loader for user pages ──
-// Navbar + Footer render instantly — only the page content shows this
 const PageLoader = () => (
   <div className="min-h-[60vh] flex items-center justify-center">
     <div className="flex flex-col items-center gap-3">
@@ -69,14 +66,12 @@ const PageLoader = () => (
   </div>
 );
 
-// Full-screen loader only for admin (heavy bundle, worth a full-screen wait)
 const AdminLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-black">
     <Loader2 className="w-10 h-10 animate-spin text-sky-500" />
   </div>
 );
 
-// ── Shared user layout ──
 const UserLayout = ({ children }: { children: React.ReactNode }) => (
   <>
     <GlobalFont />
@@ -90,7 +85,6 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => (
 
 const App = () => {
   useEffect(() => {
-    // Seed only once per day — avoids Firestore writes on every refresh
     const lastSeed = localStorage.getItem("last_seed_date");
     const today = new Date().toDateString();
     if (lastSeed !== today) {
@@ -108,79 +102,52 @@ const App = () => {
         <BrowserRouter>
           <Routes>
 
-            {/* ── Public User Routes ──
-                Each route has its OWN Suspense boundary so only the page content
-                shows a loader — Navbar and Footer are always visible immediately. ── */}
-            <Route
-              path="/"
-              element={
-                <UserLayout>
-                  <Suspense fallback={<PageLoader />}>
-                    <Index />
-                  </Suspense>
-                </UserLayout>
-              }
-            />
-            <Route
-              path="/about"
-              element={
-                <UserLayout>
-                  <Suspense fallback={<PageLoader />}>
-                    <About />
-                  </Suspense>
-                </UserLayout>
-              }
-            />
-            <Route
-              path="/services"
-              element={
-                <UserLayout>
-                  <Suspense fallback={<PageLoader />}>
-                    <Services />
-                  </Suspense>
-                </UserLayout>
-              }
-            />
-            <Route
-              path="/gallery"
-              element={
-                <UserLayout>
-                  <Suspense fallback={<PageLoader />}>
-                    <Gallery />
-                  </Suspense>
-                </UserLayout>
-              }
-            />
-            <Route
-              path="/contact"
-              element={
-                <UserLayout>
-                  <Suspense fallback={<PageLoader />}>
-                    <Contact />
-                  </Suspense>
-                </UserLayout>
-              }
-            />
+            {/* ── Public User Routes ── */}
+            <Route path="/" element={
+              <UserLayout>
+                <Suspense fallback={<PageLoader />}><Index /></Suspense>
+              </UserLayout>
+            } />
+            <Route path="/about" element={
+              <UserLayout>
+                <Suspense fallback={<PageLoader />}><About /></Suspense>
+              </UserLayout>
+            } />
+            <Route path="/services" element={
+              <UserLayout>
+                <Suspense fallback={<PageLoader />}><Services /></Suspense>
+              </UserLayout>
+            } />
+            <Route path="/gallery" element={
+              <UserLayout>
+                <Suspense fallback={<PageLoader />}><Gallery /></Suspense>
+              </UserLayout>
+            } />
+            <Route path="/contact" element={
+              <UserLayout>
+                <Suspense fallback={<PageLoader />}><Contact /></Suspense>
+              </UserLayout>
+            } />
 
             {/* ── Admin Login (no layout) ── */}
-            <Route
-              path="/admin/login"
-              element={
-                <Suspense fallback={<AdminLoader />}>
-                  <AdminLogin />
-                </Suspense>
-              }
-            />
+            <Route path="/admin/login" element={
+              <Suspense fallback={<AdminLoader />}>
+                <AdminLogin />
+              </Suspense>
+            } />
 
-            {/* ── Admin Dashboard (protected + layout) ── */}
+            {/* ── Admin routes ──
+                ProtectedRoute is eager so its Navigate redirect fires immediately.
+                AdminLayout and all child pages are still lazy — their Suspense
+                boundary sits INSIDE ProtectedRoute's children, not around it. ── */}
             <Route
               path="/admin"
               element={
-                <Suspense fallback={<AdminLoader />}>
-                  <ProtectedRoute>
+                <ProtectedRoute>
+                  <Suspense fallback={<AdminLoader />}>
                     <AdminLayout />
-                  </ProtectedRoute>
-                </Suspense>
+                  </Suspense>
+                </ProtectedRoute>
               }
             >
               <Route index element={<Suspense fallback={<PageLoader />}><HomeManagement /></Suspense>} />
@@ -194,16 +161,11 @@ const App = () => {
             </Route>
 
             {/* ── 404 ── */}
-            <Route
-              path="*"
-              element={
-                <UserLayout>
-                  <Suspense fallback={<PageLoader />}>
-                    <NotFound />
-                  </Suspense>
-                </UserLayout>
-              }
-            />
+            <Route path="*" element={
+              <UserLayout>
+                <Suspense fallback={<PageLoader />}><NotFound /></Suspense>
+              </UserLayout>
+            } />
 
           </Routes>
         </BrowserRouter>
