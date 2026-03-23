@@ -3,7 +3,7 @@ import { Toaster } from "@/shared/components/ui/toaster";
 import { Toaster as Sonner } from "@/shared/components/ui/sonner";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import Navbar from "@/user/components/Navbar";
 import Footer from "@/user/components/Footer";
@@ -11,12 +11,11 @@ import FloatingButtons from "@/user/components/FloatingButtons";
 import GlobalFont from "@/user/components/GlobalFont";
 import ScrollToTop from "@/user/components/ScrollToTop";
 
-// ── ProtectedRoute: EAGER import (never lazy) ──
-// It renders <Navigate> synchronously — if lazy, the Suspense boundary
-// intercepts before Navigate fires and the redirect never happens.
+// ── ProtectedRoute: MUST be eager — it renders <Navigate> synchronously.
+// If lazy, Suspense intercepts before the redirect fires → blank screen. ──
 import ProtectedRoute from "@/admin/components/ProtectedRoute";
 
-// ── User pages — lazy ──
+// ── User pages ──
 const Index = lazy(() => import("@/user/pages/Index"));
 const Services = lazy(() => import("@/user/pages/Services"));
 const Gallery = lazy(() => import("@/user/pages/Gallery"));
@@ -24,7 +23,7 @@ const About = lazy(() => import("@/user/pages/About"));
 const Contact = lazy(() => import("@/user/pages/Contact"));
 const NotFound = lazy(() => import("@/user/pages/NotFound"));
 
-// ── Admin pages — lazy (never downloaded by regular visitors) ──
+// ── Admin pages ──
 const AdminLayout = lazy(() => import("@/admin/pages/Layout"));
 const Dashboard = lazy(() => import("@/admin/pages/Dashboard"));
 const AdminAbout = lazy(() => import("@/admin/pages/About"));
@@ -67,7 +66,7 @@ const PageLoader = () => (
 );
 
 const AdminLoader = () => (
-  <div className="min-h-screen flex items-center justify-center bg-black">
+  <div className="min-h-screen flex items-center justify-center bg-slate-950">
     <Loader2 className="w-10 h-10 animate-spin text-sky-500" />
   </div>
 );
@@ -102,44 +101,26 @@ const App = () => {
         <BrowserRouter>
           <Routes>
 
-            {/* ── Public User Routes ── */}
-            <Route path="/" element={
-              <UserLayout>
-                <Suspense fallback={<PageLoader />}><Index /></Suspense>
-              </UserLayout>
-            } />
-            <Route path="/about" element={
-              <UserLayout>
-                <Suspense fallback={<PageLoader />}><About /></Suspense>
-              </UserLayout>
-            } />
-            <Route path="/services" element={
-              <UserLayout>
-                <Suspense fallback={<PageLoader />}><Services /></Suspense>
-              </UserLayout>
-            } />
-            <Route path="/gallery" element={
-              <UserLayout>
-                <Suspense fallback={<PageLoader />}><Gallery /></Suspense>
-              </UserLayout>
-            } />
-            <Route path="/contact" element={
-              <UserLayout>
-                <Suspense fallback={<PageLoader />}><Contact /></Suspense>
-              </UserLayout>
-            } />
+            {/* ── Public routes ── */}
+            <Route path="/" element={<UserLayout><Suspense fallback={<PageLoader />}><Index /></Suspense></UserLayout>} />
+            <Route path="/about" element={<UserLayout><Suspense fallback={<PageLoader />}><About /></Suspense></UserLayout>} />
+            <Route path="/services" element={<UserLayout><Suspense fallback={<PageLoader />}><Services /></Suspense></UserLayout>} />
+            <Route path="/gallery" element={<UserLayout><Suspense fallback={<PageLoader />}><Gallery /></Suspense></UserLayout>} />
+            <Route path="/contact" element={<UserLayout><Suspense fallback={<PageLoader />}><Contact /></Suspense></UserLayout>} />
 
-            {/* ── Admin Login (no layout) ── */}
-            <Route path="/admin/login" element={
-              <Suspense fallback={<AdminLoader />}>
-                <AdminLogin />
-              </Suspense>
-            } />
+            {/* ── Admin login (public, no layout) ── */}
+            <Route
+              path="/admin/login"
+              element={
+                <Suspense fallback={<AdminLoader />}>
+                  <AdminLogin />
+                </Suspense>
+              }
+            />
 
-            {/* ── Admin routes ──
-                ProtectedRoute is eager so its Navigate redirect fires immediately.
-                AdminLayout and all child pages are still lazy — their Suspense
-                boundary sits INSIDE ProtectedRoute's children, not around it. ── */}
+            {/* ── /admin with no sub-path → go to /admin/login
+                ProtectedRoute handles this too, but this makes the
+                intent explicit and avoids any ambiguity ── */}
             <Route
               path="/admin"
               element={
@@ -150,7 +131,8 @@ const App = () => {
                 </ProtectedRoute>
               }
             >
-              <Route index element={<Suspense fallback={<PageLoader />}><HomeManagement /></Suspense>} />
+              {/* Default /admin → /admin/home */}
+              <Route index element={<Navigate to="/admin/home" replace />} />
               <Route path="home" element={<Suspense fallback={<PageLoader />}><HomeManagement /></Suspense>} />
               <Route path="about" element={<Suspense fallback={<PageLoader />}><AdminAbout /></Suspense>} />
               <Route path="contact" element={<Suspense fallback={<PageLoader />}><AdminContact /></Suspense>} />
@@ -161,11 +143,7 @@ const App = () => {
             </Route>
 
             {/* ── 404 ── */}
-            <Route path="*" element={
-              <UserLayout>
-                <Suspense fallback={<PageLoader />}><NotFound /></Suspense>
-              </UserLayout>
-            } />
+            <Route path="*" element={<UserLayout><Suspense fallback={<PageLoader />}><NotFound /></Suspense></UserLayout>} />
 
           </Routes>
         </BrowserRouter>

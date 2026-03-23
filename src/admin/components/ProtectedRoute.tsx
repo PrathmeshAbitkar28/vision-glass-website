@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { auth } from "@/shared/lib/firebase";
+import { Loader2 } from "lucide-react";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -20,23 +21,31 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return () => unsubscribe();
   }, []);
 
+  // ── Still checking Firebase auth state ──
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6 gap-6">
-        <div className="relative w-24 h-24">
-            <div className="absolute inset-0 border-4 border-[#0ea5e9]/20 rounded-full" />
-            <div className="absolute inset-0 border-4 border-t-[#0ea5e9] rounded-full animate-spin" />
-        </div>
-        <p className="font-black text-slate-800 tracking-tight animate-pulse text-xl">Authenticating Session...</p>
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center gap-4">
+        <Loader2 className="w-8 h-8 animate-spin text-sky-500" />
+        <p className="text-slate-400 text-sm font-medium tracking-widest uppercase">
+          Authenticating…
+        </p>
       </div>
     );
   }
 
+  // ── Not logged in → go to /admin/login ──
+  // Saves current location so after login they land back where they were
   if (!user) {
-    // Redirect to login but save the current location they were trying to access
-    return <Navigate to="/admin/login" state={{ from: location }} replace />;
+    return (
+      <Navigate
+        to="/admin/login"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
+  // ── Logged in → render the admin page ──
   return <>{children}</>;
 };
 
