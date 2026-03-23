@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 210 30% 98%;
+:root {
+  font-size: 12px; /* Professional 75% scale exactly */
+  --background: 210 30% 98%;
     --foreground: 215 25% 15%;
 
     --card: 0 0% 100%;
@@ -86,6 +87,9 @@
 
   body {
     @apply bg-background text-foreground font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   html {

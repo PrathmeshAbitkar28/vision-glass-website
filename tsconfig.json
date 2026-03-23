@@ -4,7 +4,14 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@admin/*": ["./src/admin/*"],
+      "@user/*": ["./src/user/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@/components/ui/*": ["./src/shared/components/ui/*"],
+      "@/lib/*": ["./src/shared/lib/*"],
+      "@/hooks/*": ["./src/shared/hooks/*"],
+      "@/components/*": ["./src/user/components/*"]
     },
     "noImplicitAny": false,
     "noUnusedParameters": false,
