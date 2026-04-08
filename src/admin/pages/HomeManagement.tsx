@@ -179,7 +179,7 @@ const HomeManagement = () => {
     return (
         <div className="min-h-screen bg-[#f8fafc] pb-32">
             {/* ── LIVE HEADER & COMMANDS ── */}
-            <div className="fixed top-0 left-0 right-0 lg:left-80 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-6 sm:px-12 py-5 flex items-center justify-between shadow-sm">
+            <div className="fixed top-16 lg:top-0 left-0 right-0 lg:left-80 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 px-6 sm:px-12 py-5 flex items-center justify-between shadow-sm">
                 <div className="flex items-center gap-4">
                     <div className="w-10 h-10 rounded-xl bg-sky-500 flex items-center justify-center text-white shadow-lg shadow-sky-500/20">
                         <Monitor className="w-5 h-5" />
@@ -201,7 +201,7 @@ const HomeManagement = () => {
                 </Button>
             </div>
 
-            <div className="w-full pt-32 px-4 sm:px-10 lg:px-14">
+            <div className="w-full pt-44 lg:pt-32 px-4 sm:px-10 lg:px-14">
                 
                 {/* ── 1. HERO (SECTION FLOW) ── */}
                 <div className="space-y-12 mb-24">

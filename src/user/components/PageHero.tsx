@@ -163,7 +163,7 @@ const PageHero = ({ title, subtitle, breadcrumb }: PageHeroProps) => {
 
           <div className="ph-subtitle flex items-center justify-center gap-2 md:gap-4 px-4 text-center">
             <div className="w-6 md:w-10 h-[2px] rounded-full bg-primary shrink-0" />
-            <p className="text-[10px] md:text-lg text-white font-bold uppercase tracking-widest leading-tight">{subtitle}</p>
+            <p className="text-xs md:text-lg text-white font-bold uppercase tracking-widest leading-tight">{subtitle}</p>
             <div className="w-6 md:w-10 h-[2px] rounded-full bg-primary shrink-0" />
           </div>
         </div>

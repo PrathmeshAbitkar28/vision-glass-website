@@ -15,15 +15,6 @@ interface GalleryItem {
   image: string;
 }
 
-const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
-  { title: "Glass Facade", category: "Commercial", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80" },
-  { title: "Structural Window", category: "Residential", image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80" },
-  { title: "Industrial Vision", category: "Industrial", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80" },
-  { title: "Office Partitions", category: "Commercial", image: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" },
-  { title: "LED Mirror", category: "Interior", image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800&q=80" },
-  { title: "Curtain Wall", category: "Commercial", image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80" },
-];
-
 // ── IntersectionObserver-based lazy image ──
 const LazyImage = ({
   src, alt, index, total, onClick,
@@ -93,14 +84,12 @@ const Gallery = () => {
   const [filter, setFilter] = useState("All");
   const [lightbox, setLightbox] = useState<number | null>(null);
 
-  const { data: galleryItems = DEFAULT_GALLERY_ITEMS, isLoading: loading } = useQuery<GalleryItem[]>({
+  const { data: galleryItems = [], isLoading: loading } = useQuery<GalleryItem[]>({
     queryKey: ["gallery-items"],
     queryFn: async () => {
       const data = await getCollectionContent("gallery");
-      const sorted = (data as GalleryItem[]).sort((a, b) => (b.title || "").localeCompare(a.title || ""));
-      return sorted.length > 0 ? sorted : DEFAULT_GALLERY_ITEMS;
+      return (data as GalleryItem[]).sort((a, b) => (b.title || "").localeCompare(a.title || ""));
     },
-    initialData: DEFAULT_GALLERY_ITEMS,
     staleTime: 1000 * 60 * 15,
   });
 

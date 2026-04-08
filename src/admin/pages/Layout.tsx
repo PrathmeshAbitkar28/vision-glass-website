@@ -85,6 +85,7 @@ const AdminLayout = () => {
                 <Link
                   key={link.to}
                   to={link.to}
+                  onClick={() => { if (window.innerWidth < 1024) setSidebarOpen(false); }}
                   className={cn(
                     "flex items-center gap-4 px-5 py-4 transition-all duration-200 group text-[13px] font-black uppercase tracking-[0.1em]",
                     isActive

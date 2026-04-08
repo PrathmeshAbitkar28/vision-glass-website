@@ -1,4 +1,4 @@
-import { MessageCircle, Instagram } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { getSiteMetadata } from "@/shared/lib/firestore-service";
 
@@ -13,43 +13,33 @@ const FloatingButtons = () => {
     ? `https://wa.me/${contact.socials.whatsapp}`
     : "https://wa.me/919921917083";
 
-  const instagramHref = contact?.socials?.instagram
-    ? `https://instagram.com/${contact.socials.instagram.replace(/^@/, "")}`
-    : "https://instagram.com/vision_glass";
-
   return (
-    <div className="fixed bottom-6 right-6 lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-[9999] flex flex-col gap-3">
+    <div className="fixed bottom-8 right-8 z-[9999] flex flex-col gap-3">
 
       {/* WhatsApp */}
-      <div className="group flex items-center justify-end">
-        <span className="hidden lg:block opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 ease-out bg-[#25D366] text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded-l-full pointer-events-none whitespace-nowrap shadow-xl select-none">
-          WhatsApp
-        </span>
+      <div className="group flex flex-row-reverse items-center gap-3">
         <a
           href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-12 h-12 lg:w-14 lg:h-14 rounded-full lg:rounded-none lg:rounded-l-2xl flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 lg:hover:scale-100 lg:hover:w-[70px] bg-[#25D366] text-white"
+          className="w-16 h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(37,211,102,0.4)] transition-all duration-300 hover:scale-110 active:scale-95 bg-[#25D366] text-white border-2 border-white/20 animate-pulse-slow"
         >
-          <MessageCircle className="w-5 h-5 lg:w-6 lg:h-6" />
+          <MessageCircle className="w-9 h-9" />
         </a>
-      </div>
-
-      {/* Instagram */}
-      <div className="group flex items-center justify-end">
-        <span className="hidden lg:block opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 ease-out bg-[#E4405F] text-white text-[11px] font-black uppercase tracking-widest px-4 py-2.5 rounded-l-full pointer-events-none whitespace-nowrap shadow-xl select-none">
-          Instagram
+        <span className="opacity-0 group-hover:opacity-100 translate-x-3 group-hover:translate-x-0 transition-all duration-300 ease-out bg-white text-slate-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-full pointer-events-none whitespace-nowrap shadow-xl border border-slate-100">
+          Chat on WhatsApp
         </span>
-        <a
-          href={instagramHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-12 h-12 lg:w-14 lg:h-14 rounded-full lg:rounded-none lg:rounded-l-2xl flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110 lg:hover:scale-100 lg:hover:w-[70px] bg-[#E4405F] text-white"
-        >
-          <Instagram className="w-5 h-5 lg:w-6 lg:h-6" />
-        </a>
       </div>
 
+      <style>{`
+        @keyframes pulse-slow {
+          0%, 100% { transform: scale(1); box-shadow: 0 10px 30px rgba(37,211,102,0.4); }
+          50% { transform: scale(1.05); box-shadow: 0 15px 45px rgba(37,211,102,0.6); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };

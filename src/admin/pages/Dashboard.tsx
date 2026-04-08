@@ -21,9 +21,9 @@ const statistics = [
 
 const Dashboard = () => {
   return (
-    <div className="w-full space-y-8 pb-20 pt-28">
+    <div className="w-full space-y-8 pb-20 pt-44 lg:pt-28">
       {/* 🏛️ Professional Fixed Command Header */}
-      <div className="fixed top-0 left-0 right-0 lg:left-80 z-40 px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-6" style={{ backgroundColor: '#1e3a5f', borderBottom: '2px solid rgba(255,255,255,0.08)', boxShadow: '0 10px 30px rgba(30,58,95,0.3)' }}>
+      <div className="fixed top-16 lg:top-0 left-0 right-0 lg:left-80 z-40 px-10 py-5 flex flex-col md:flex-row items-center justify-between gap-6" style={{ backgroundColor: '#1e3a5f', borderBottom: '2px solid rgba(255,255,255,0.08)', boxShadow: '0 10px 30px rgba(30,58,95,0.3)' }}>
         <div className="flex items-center gap-5 w-full md:w-auto">
           <div className="bg-white/10 p-3 text-sky-400 border border-white/5">
             <LayoutDashboard className="w-7 h-7" />

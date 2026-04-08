@@ -9,73 +9,13 @@ import { optimizeUrl, Breakpoints } from "@/shared/lib/image-optimizer";
 
 const BLUE = "#0ea5e9";
 
-const DEFAULT_SERVICES = [
-  {
-    title: "Glass Partitions",
-    subtitle: "Office & Commercial",
-    desc: "Full and partial glass partition walls for offices, cabins and conference rooms.",
-    image: "https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=700&q=85",
-    tags: ["Frameless", "Framed", "Office Cabins"],
-  },
-  {
-    title: "Aluminium & UPVC Windows",
-    subtitle: "Windows & Partitions",
-    desc: "Durable, weather-resistant window frames and partition systems.",
-    image: "https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?w=700&q=85",
-    tags: ["Aluminium", "UPVC", "Casement"],
-  },
-  {
-    title: "Structural Facade",
-    subtitle: "Exterior Facade Systems",
-    desc: "High-performance structural and semi-structural exterior glass facade systems for commercial buildings and IT parks.",
-    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=700&q=85",
-    tags: ["Structural", "Semi-Structural", "Curtain Wall"],
-  },
-  {
-    title: "Glass Glazing",
-    subtitle: "Composite Panel Work",
-    desc: "Toughened glass glazing and composite ACP panel installations for building exteriors and interiors.",
-    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=85",
-    tags: ["Toughened Glass", "ACP Panels", "Safety Glass"],
-  },
-  {
-    title: "Glass Interior Solutions",
-    subtitle: "Complete Interior Fitouts",
-    desc: "Custom glass shelving, cabinets, display units and full glass interior fitouts tailored to your design.",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=700&q=85",
-    tags: ["Shelving", "Cabinets", "Display Units"],
-  },
-  {
-    title: "Decorative & LED Mirrors",
-    subtitle: "Mirror Work",
-    desc: "Backlit LED mirrors, decorative mirrors, vastu mirrors and custom mirror installations for all spaces.",
-    image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=700&q=85",
-    tags: ["LED Backlit", "Decorative", "Vastu"],
-  },
-  {
-    title: "Acid, Stain & Bend Glass",
-    subtitle: "Artistic Glass Treatments",
-    desc: "Acid etching, stained glass, airbrush work and curved glass fabrication for unique architectural features.",
-    image: "https://images.unsplash.com/photo-1516081498305-64feeb0b5ac0?w=700&q=85",
-    tags: ["Acid Etching", "Stained Glass", "Bend Glass"],
-  },
-  {
-    title: "PVC Fiber & Profile Doors",
-    subtitle: "Door Systems",
-    desc: "Moisture-resistant PVC fiber doors and premium profile door systems for all environments.",
-    image: "https://images.unsplash.com/photo-1534138138883-7c157f12c3b8?w=700&q=85",
-    tags: ["PVC Fiber", "Profile Doors", "Moisture Resistant"],
-  },
-];
-
 const Services = () => {
-  const { data: servicesList = DEFAULT_SERVICES, isLoading: loading } = useQuery({
+  const { data: servicesList = [], isLoading: loading } = useQuery({
     queryKey: ["services-list"],
     queryFn: async () => {
       const data = await getCollectionContent("services");
-      return data.length > 0 ? data : DEFAULT_SERVICES;
+      return data;
     },
-    initialData: DEFAULT_SERVICES,
     staleTime: 1000 * 60 * 15,
   });
 
